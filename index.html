@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipeline de Datos Inteligente & ML - Pregunta 7</title>
+    <!-- Fuente Inter de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(22, 28, 45, 0.45);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.15);
+            --secondary: #38bdf8;
+            --accent: #c084fc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, rgba(56, 189, 248, 0.1) 0px, transparent 50%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--secondary), var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.03em;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 4rem auto 6rem;
+            padding: 0 1.5rem;
+            text-align: center;
+        }
+
+        .badge {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            color: #818cf8;
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.04em;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 750px;
+            margin: 0 auto 2.5rem;
+            font-weight: 400;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(99, 102, 241, 0.5);
+            background-color: #5558e6;
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--card-border);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Glassmorphic Cards Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 6rem;
+            padding: 0 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(99, 102, 241, 0.05) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(99, 102, 241, 0.35);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #ffffff;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Details Sections */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto 6rem;
+            padding: 0 1.5rem;
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            margin-bottom: 6rem;
+        }
+
+        .row:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .col-text {
+            flex: 1;
+        }
+
+        .col-visual {
+            flex: 1.1;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            backdrop-filter: blur(8px);
+            position: relative;
+        }
+
+        .row h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            color: #ffffff;
+        }
+
+        .row p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            position: relative;
+            padding-left: 1.75rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+            font-size: 0.98rem;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: 800;
+        }
+
+        /* Code Block */
+        pre {
+            background: #05070c;
+            border: 1px solid var(--card-border);
+            padding: 1.5rem;
+            border-radius: 16px;
+            overflow-x: auto;
+            color: #38bdf8;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+
+        .code-keyword { color: #f43f5e; }
+        .code-string { color: #10b981; }
+        .code-comment { color: #64748b; }
+        .code-func { color: #818cf8; }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--card-border);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo {
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            .row {
+                flex-direction: column !important;
+                gap: 2rem;
+            }
+            header {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .nav-links a {
+                margin: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">DATA PIPELINE ENGINE</div>
+        <nav class="nav-links">
+            <a href="#arquitectura">Arquitectura</a>
+            <a href="#pyspark">PySpark</a>
+            <a href="#ml">Machine Learning</a>
+            <a href="#instalacion">Instalación</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <span class="badge">Ingeniería de Datos & Inteligencia Artificial</span>
+        <h1>Procesamiento de Ventas de Extremo a Extremo</h1>
+        <p>Una arquitectura modular y premium construida con PySpark para procesamiento masivo distribuido de archivos CSV, persistencia eficiente en Parquet, modelado en Jupyter y despliegue interactivo con Streamlit y Machine Learning.</p>
+        <div class="cta-buttons">
+            <a href="#arquitectura" class="btn btn-primary">Ver Arquitectura</a>
+            <a href="#instalacion" class="btn btn-secondary">Instrucciones de Uso</a>
+        </div>
+    </section>
+
+    <!-- Grid de Pilares Tecnológicos -->
+    <div class="grid">
+        <div class="card">
+            <div class="card-icon">⚡</div>
+            <h3>Carga con PySpark</h3>
+            <p>Procesamiento distribuido en memoria utilizando Apache Spark. Ingesta diferida de archivos CSV planos y tipificación estricta de esquemas.</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">📦</div>
+            <h3>Formato Parquet</h3>
+            <p>Conversión a almacenamiento columnar optimizado. Mayor ratio de compresión (Snappy) y optimización en lecturas para analítica de Big Data.</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">📊</div>
+            <h3>Streamlit UI</h3>
+            <p>Dashboard reactivo y premium. Tarjetas de métricas fluidas, visualizaciones interactivas de ventas y control directo del pipeline.</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🤖</div>
+            <h3>Predicción con ML</h3>
+            <p>Modelo predictivo Random Forest entrenado en un Jupyter Notebook. Simulador interactivo integrado en el dashboard web en tiempo real.</p>
+        </div>
+    </div>
+
+    <!-- Secciones Detalladas -->
+    <section class="section" id="arquitectura">
+        <div class="section-header">
+            <h2>Arquitectura del Pipeline</h2>
+            <p>El flujo estructurado de los datos de ventas de la empresa</p>
+        </div>
+
+        <div class="row">
+            <div class="col-text">
+                <h3>1. Ingesta y Cálculo Vectorizado</h3>
+                <p>El flujo se inicia cargando los archivos de ventas diarias en formato CSV de forma distribuida. SparkSession se encarga de analizar los tipos de datos subyacentes e inicializar los nodos de cómputo.</p>
+                <p>Calculamos la columna calculada <code>total_venta</code> mediante aritmética vectorizada, evitando loops tradicionales en Python y maximizando la escalabilidad con volúmenes masivos de registros:</p>
+                <ul class="feature-list">
+                    <li>Esquema inferido automáticamente para evitar discrepancias de tipos.</li>
+                    <li>Casteo numérico explícito (<code>cantidad</code> a int, <code>precio</code> a double).</li>
+                    <li>Cálculo en paralelo de: <code>total_venta = cantidad * precio</code>.</li>
+                </ul>
+            </div>
+            <div class="col-visual">
+                <h3>Esquema de Procesamiento</h3>
+                <pre>
+<span class="code-comment"># Carga diferida en PySpark</span>
+df = spark.read.csv(<span class="code-string">"ventas.csv"</span>, header=<span class="code-keyword">True</span>, inferSchema=<span class="code-keyword">True</span>)
+
+<span class="code-comment"># Cálculo en paralelo</span>
+df_resultado = df.withColumn(
+    <span class="code-string">"total_venta"</span>, 
+    <span class="code-func">col</span>(<span class="code-string">"cantidad"</span>) * <span class="code-func">col</span>(<span class="code-string">"precio"</span>)
+)
+
+<span class="code-comment"># Escribir a Parquet de forma atómica</span>
+df_resultado.write.mode(<span class="code-string">"overwrite"</span>).parquet(<span class="code-string">"ventas_procesadas.parquet"</span>)</pre>
+            </div>
+        </div>
+
+        <div class="row" id="pyspark">
+            <div class="col-visual" style="text-align: center;">
+                <div style="font-size: 5rem; margin-bottom: 1rem;">📂 ➡️ ⚡ ➡️ 📦</div>
+                <div style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5;">
+                    CSV Plano (Fila a Fila) <br>
+                    ⬇️<br>
+                    <strong>Motor de Cómputo PySpark (Memoria)</strong><br>
+                    ⬇br>
+                    Carpeta Parquet Columnar (Snappy Comprimido)
+                </div>
+            </div>
+            <div class="col-text">
+                <h3>2. Persistencia Columnar (Parquet)</h3>
+                <p>El almacenamiento en Parquet ofrece una optimización drástica para fines analíticos. A diferencia de CSV que procesa datos fila por fila en disco, Parquet organiza los bytes de forma columnar.</p>
+                <p>Esto reduce dramáticamente el uso de almacenamiento físico en disco gracias a la compresión nativa y permite a la aplicación de visualización en Streamlit leer grandes históricos de datos casi al instante.</p>
+                <ul class="feature-list">
+                    <li>Organización física de datos optimizada por columnas.</li>
+                    <li>Soporte nativo para lectura rápida mediante <code>pyarrow</code> en Pandas y Streamlit.</li>
+                    <li>Metadatos autocontenidos y compresión eficiente (Snappy).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row" id="ml">
+            <div class="col-text">
+                <h3>3. Inteligencia Predictiva (Machine Learning)</h3>
+                <p>Para dotar de valor agregado a la analítica de ventas, desarrollamos un cuaderno Jupyter interactivo (<code>modelo_ventas.ipynb</code>) para entrenar y evaluar un modelo de Machine Learning.</p>
+                <p>Entrenamos un modelo de <strong>Random Forest Regressor</strong> usando un dataset de entrenamiento representativo generado sintéticamente. El modelo aprende las variaciones de precios y patrones de volumen según el tipo de producto.</p>
+                <ul class="feature-list">
+                    <li><strong>Algoritmo:</strong> Random Forest Regressor de scikit-learn.</li>
+                    <li><strong>Features:</strong> Producto (One-Hot Encoded), cantidad y precio base.</li>
+                    <li><strong>Persistencia:</strong> Exportado en <code>modelo_ventas.pkl</code> con joblib.</li>
+                    <li><strong>Simulador:</strong> Integrado directamente en Streamlit para interactuar y modelar predicciones de ventas dinámicas.</li>
+                </ul>
+            </div>
+            <div class="col-visual">
+                <h3>Entrenamiento del Modelo</h3>
+                <pre>
+<span class="code-keyword">from</span> sklearn.ensemble <span class="code-keyword">import</span> RandomForestRegressor
+<span class="code-keyword">import</span> joblib
+
+<span class="code-comment"># Inicializar y entrenar el regresor</span>
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+<span class="code-comment"># Guardar el binario para producción</span>
+joblib.dump(model, <span class="code-string">"modelo_ventas.pkl"</span>)</pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Instalación -->
+    <section class="section" id="instalacion" style="border-top: 1px solid var(--card-border); padding-top: 5rem;">
+        <div class="section-header">
+            <h2>Instalación y Despliegue Local</h2>
+            <p>Sigue estos pasos para desplegar toda la infraestructura en tu máquina</p>
+        </div>
+
+        <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 3rem; text-align: left; max-width: 800px; margin: 0 auto;">
+            <h3 style="margin-bottom: 1.5rem; color: #ffffff;">📋 Comandos Rápidos</h3>
+            
+            <p style="margin-bottom: 0.5rem; font-weight: 600; color: var(--secondary);">1. Instalar dependencias necesarias:</p>
+            <pre style="margin-bottom: 2rem;">pip install -r requirements.txt</pre>
+            
+            <p style="margin-bottom: 0.5rem; font-weight: 600; color: var(--secondary);">2. Ejecutar procesamiento distribuido en PySpark:</p>
+            <pre style="margin-bottom: 2rem;">python procesar_ventas.py</pre>
+            
+            <p style="margin-bottom: 0.5rem; font-weight: 600; color: var(--secondary);">3. Lanzar el Dashboard Interactivo de Streamlit:</p>
+            <pre style="margin-bottom: 2rem;">streamlit run app.py</pre>
+            
+            <p style="margin-bottom: 0.5rem; font-weight: 600; color: var(--secondary);">4. Entrenar el Modelo de ML (Opcional - ya pre-entrenado):</p>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">Puedes abrir y ejecutar el cuaderno <code>modelo_ventas.ipynb</code> utilizando VS Code o Jupyter Lab para revisar las métricas estadísticas del regresor.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">INTELLIGENT DATA PLATFORM</div>
+        <p>Desarrollado para Ingeniería de Datos - Solución Pregunta 7</p>
+        <p style="font-size: 0.8rem; color: #64748b;">© 2026. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>
