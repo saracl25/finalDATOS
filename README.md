@@ -1,4 +1,7 @@
 # Pregunta 7: Procesamiento de Ventas con PySpark y Streamlit
+![Python](https://img.shields.io/badge/python-3673A8?style=for-the-badge&logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/saracl25/Seguimiento_2)
 
 Este proyecto contiene la solución completa a la **Pregunta 7**, diseñada para cargar un archivo diario de ventas en formato CSV, procesar los datos utilizando **PySpark** para calcular una nueva columna `total_venta` (cantidad * precio), guardar los resultados en formato optimizado **Parquet**, y finalmente visualizar los resultados en una aplicación web interactiva desarrollada con **Streamlit**.
 
